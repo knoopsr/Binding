@@ -1,0 +1,116 @@
+﻿<Window x:Class="Binding.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Binding"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid DataContext="{Binding Source={StaticResource VML}, Path=PersonenViewModel}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListView
+                
+                        Grid.Row="0"              
+     
+                        ItemsSource="{Binding MijnCollectie}"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        SelectedItem="{Binding MijnSelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                                    Width="95"
+                        Height="95"
+                                    Margin="5"
+                                    Padding="2"
+                                    Background="LightGray"
+                                    BorderBrush="Gray"
+                                    BorderThickness="1"
+                                    CornerRadius="8">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                             
+                            </Grid.RowDefinitions>
+
+                            <StackPanel
+                                            Grid.Column="1"
+                                            Grid.ColumnSpan="2"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Bottom"
+                                            Orientation="Vertical">
+                                <TextBlock
+                                                FontSize="9"
+                                                FontWeight="Bold"
+                                                Text="{Binding Naam}"
+                                                TextWrapping="Wrap" />
+                                <TextBlock
+                                                Grid.RowSpan="3"
+                                                FontSize="8"
+                                                Text="{Binding Voornaam}"
+                                                TextWrapping="Wrap" />
+                       
+                            </StackPanel>
+                            <StackPanel
+                                            Grid.Column="2"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Top"
+                                            Orientation="Vertical">
+                                <Button
+                                                Width="30"
+                                                Height="20"
+                                    Content="NEW"
+                                         
+                                              Command="{Binding PersonenViewModel.cmdNew, Source={StaticResource VML}}"
+                                                CommandParameter="{Binding}"
+                                                                              
+                                                ToolTip="New" />
+                                <Button
+                                                Width="30"
+                                                Height="20"
+                                                               Content="Edit"
+                                               Command="{Binding PersonenViewModel.cmdEditPersoon, Source={StaticResource VML}}"
+                                                CommandParameter="{Binding}"
+                                     
+                                                ToolTip="Aanpassen" />
+                                <Button
+                                                Width="30"
+                                                Height="20"
+                                                    Content="DEL"
+                                             Command="{Binding PersonenViewModel.cmdDelete, Source={StaticResource VML}}"
+                                                CommandParameter="{Binding }"
+                                      
+                                                ToolTip="Delete" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="1">
+            <TextBlock                
+                    Text="{Binding MijnSelectedItem.Naam}" />
+            <TextBlock
+                    Text="{Binding MijnSelectedItem.Voornaam}" />
+            <TextBlock
+                    Text="{Binding MijnSelectedItem.PersoonID}" />
+        </StackPanel>      
+        
+
+    </Grid>
+</Window>

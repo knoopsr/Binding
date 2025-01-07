@@ -1,0 +1,13 @@
+﻿<Application x:Class="Binding.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:VM="clr-namespace:Binding.ViewModel"
+             xmlns:local="clr-namespace:Binding"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <VM:clsVMLocator x:Key="VML" />
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>
