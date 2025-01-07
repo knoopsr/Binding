@@ -1,8 +1,11 @@
 ﻿using Binding.Common;
+using Binding.Helpers;
 using Binding.Model;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using System.IO;
+
 
 namespace Binding.ViewModel
 {
@@ -12,7 +15,8 @@ namespace Binding.ViewModel
         public ICommand cmdDelete { get; set; }
         public ICommand cmdNew { get; set; }
         public ICommand cmdEditPersoon { get; set; }
- 
+        public ICommand cmdDrop { get; set; }
+
 
 
 
@@ -39,9 +43,23 @@ namespace Binding.ViewModel
             }
         }
 
+        private ObservableCollection<clsBestandenModel> _mijnBestanden;
+        public ObservableCollection<clsBestandenModel> MijnBestanden
+        {
+            get { return _mijnBestanden; }
+            set
+            {
+
+                _mijnBestanden = value;
+                OnPropertyChanged();
+            }
+        }
+
         private void LoadData()
         {
             MijnCollectie = new ObservableCollection<clsPersoonModel>();
+            MijnBestanden = new ObservableCollection<clsBestandenModel>();
+
 
             MijnCollectie.Add(new clsPersoonModel { PersoonID = 1, Naam = "Janssens", Voornaam = "Jan" });
             MijnCollectie.Add(new clsPersoonModel { PersoonID = 2, Naam = "Peeters", Voornaam = "Piet" });
@@ -57,10 +75,29 @@ namespace Binding.ViewModel
             cmdDelete = new clsRelayCommand<object>(executeDelete);
             cmdNew = new clsRelayCommand<object>(executeNew);
 
+            cmdDrop = new clsRelayCommand<object>(executeDrop);
+
 
             LoadData();
 
         }
+
+        private void executeDrop(object obj)
+        {
+            if (obj is DataObject dataObject && dataObject.GetDataPresent(DataFormats.FileDrop))
+            {
+                var files = (string[])dataObject.GetData(DataFormats.FileDrop);
+                if (files.Length > 0)
+                {  
+                    foreach (var file in files)
+                    {
+                        string bestandNaam = Path.GetFileName(file);
+                        MijnBestanden.Add(new clsBestandenModel { BestandsNaam = bestandNaam });
+                    }
+                }
+            }
+        }
+
 
         private void executeNew(object obj)
         {

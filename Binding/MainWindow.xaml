@@ -3,11 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+          xmlns:behaviors="clr-namespace:Binding.Behaviors"
         xmlns:local="clr-namespace:Binding"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid DataContext="{Binding Source={StaticResource VML}, Path=PersonenViewModel}">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -44,7 +47,7 @@
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
-                             
+
                             </Grid.RowDefinitions>
 
                             <StackPanel
@@ -63,7 +66,7 @@
                                                 FontSize="8"
                                                 Text="{Binding Voornaam}"
                                                 TextWrapping="Wrap" />
-                       
+
                             </StackPanel>
                             <StackPanel
                                             Grid.Column="2"
@@ -109,8 +112,23 @@
                     Text="{Binding MijnSelectedItem.Voornaam}" />
             <TextBlock
                     Text="{Binding MijnSelectedItem.PersoonID}" />
-        </StackPanel>      
-        
 
+            <ListBox
+                Width="200"
+                Height="200"
+                ItemsSource="{Binding MijnBestanden}"
+                DisplayMemberPath="BestandsNaam"
+                />
+
+        </StackPanel>
+
+
+        <Border Grid.Column="2" BorderBrush="Black" BorderThickness="1" Margin="5"
+                Background="AliceBlue"
+              >
+            <i:Interaction.Behaviors>
+                <behaviors:clsDragDropBehavior DropCommand="{Binding cmdDrop}" />
+            </i:Interaction.Behaviors>
+        </Border>
     </Grid>
 </Window>
