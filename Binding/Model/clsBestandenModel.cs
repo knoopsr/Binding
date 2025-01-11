@@ -19,5 +19,17 @@ namespace Binding.Model
                 OnPropertyChanged();
             }
         }
+
+
+        private byte[] _bestandsData;
+        public byte[] BestandsData
+        {
+            get { return _bestandsData; }
+            set
+            {
+                _bestandsData = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

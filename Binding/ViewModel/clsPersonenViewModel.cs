@@ -92,7 +92,10 @@ namespace Binding.ViewModel
                     foreach (var file in files)
                     {
                         string bestandNaam = Path.GetFileName(file);
-                        MijnBestanden.Add(new clsBestandenModel { BestandsNaam = bestandNaam });
+                        MijnBestanden.Add(new clsBestandenModel { BestandsNaam = bestandNaam,
+                            BestandsData = File.ReadAllBytes(file)
+
+                        });
                     }
                 }
             }
